@@ -2,7 +2,7 @@
 //   (c) 2000-2002 Seydi Tiryaki 
 
 //   Use it like this: document.getElementById('mytext').value = icheck(document.getElementById('mytext').value);
-//   replace the 'mytext' with the name of the text input you want to have formatted automatically.
+//   replace the 'mytext' with the name of the text input you want to have formatted automatically. 
 
 
 function icheck(field_input)  { 
