@@ -1,0 +1,89 @@
+//   Input Check Form field punctuation checker
+//   (c) 2000-2002 Seydi Tiryaki 
+
+
+function icheck(field_input)  { 
+
+input_length=field_input.length;
+t=0;
+new_str="";
+
+while (t<input_length)  { 
+
+while (field_input.charAt(t)!=" " && t<input_length)  { 
+new_str+=field_input.charAt(t);
+t++;
+}
+
+new_str+=" ";
+
+while (field_input.charAt(t)==" " && t<input_length)  { 
+t++;
+}
+}
+
+new_length=new_str.length; newest="";
+q=new_length-1; if (new_str.charAt(q)==" ")  { new_length--; }
+t=0; h=0;
+
+while (t<new_length)  { 
+
+if (t==0 && new_str.charAt(t)==" ") t++;
+if (new_str.charAt(t)==" " && new_str.charAt(t+1)==")")  { t++; }
+if (new_str.charAt(t)==" " && new_str.charAt(t+1)==",")  { t++; }
+if (new_str.charAt(t)==" " && new_str.charAt(t+1)=="!")  { t++; }
+if (new_str.charAt(t)==" " && new_str.charAt(t+1)=="?")  { t++; }
+if (new_str.charAt(t)==" " && new_str.charAt(t+1)==":")  { t++; }
+if (new_str.charAt(t)==" " && new_str.charAt(t+1)==";")  { t++; }
+if (new_str.charAt(t)==" " && new_str.charAt(t+1)=="." && new_str.charAt(t+2)!=".")  { t++; }
+newest+=new_str.charAt(t);
+t++;
+}
+
+new_length=newest.length; final="";
+t=0;
+
+while (t<new_length)  { 
+if (newest.charAt(t)==")" && newest.charAt(t+1)!=" " && newest.charAt(t+1)!="'" && newest.charAt(t+1)!='"' && newest.charAt(t+1)!="." && newest.charAt(t+1)!="," && newest.charAt(t+1)!=";" && newest.charAt(t+1)!=":" && newest.charAt(t+1)!="!" && newest.charAt(t+1)!="?")  { final+=") "; t++; }
+if (newest.charAt(t)=="(" && newest.charAt(t-1)!=" " && newest.charAt(t-1)!="'" && newest.charAt(t-1)!='"' && newest.charAt(t-1)!="." && t!=0)  { final+=" ("; t++; }
+if (newest.charAt(t)=="(" && newest.charAt(t+1)==" ")  { final+="("; t++; t++; }
+if (newest.charAt(t)=="," && newest.charAt(t+1)!=" ")  { final+=", "; t++; }
+if (newest.charAt(t)=="'" && newest.charAt(t+1)==" " && newest.charAt(t+3)==" ")  { final+="'"; t+=2;  }
+if (newest.charAt(t)=="!" && newest.charAt(t+1)!=" " && newest.charAt(t+1)!="!" && newest.charAt(t+1)!="?" && newest.charAt(t+1)!=")" && newest.charAt(t+1)!="'" && newest.charAt(t+1)!="." && newest.charAt(t+1)!="," && newest.charAt(t+1)!=":")  { final+="! "; t++; }
+if (newest.charAt(t)=="?" && newest.charAt(t+1)!=" " && newest.charAt(t+1)!="!" && newest.charAt(t+1)!="?" && newest.charAt(t+1)!=")" && newest.charAt(t+1)!="'" && newest.charAt(t+1)!="." && newest.charAt(t+1)!="," && newest.charAt(t+1)!=":")  { final+="? "; t++; }
+if (newest.charAt(t)==":" && newest.charAt(t+1)!=" ")  { final+=": "; t++; }
+if (newest.charAt(t)==";" && newest.charAt(t+1)!=" ")  { final+="; "; t++; }
+if (newest.charAt(t)=="." && newest.charAt(t+1)!=" " && newest.charAt(t+2)!="." && newest.charAt(t+1)!="." && newest.charAt(t-1)!="." && newest.charAt(t+1)!=")" && newest.charAt(t+1)!="," && newest.charAt(t+1)!="!" && newest.charAt(t+1)!="?" && newest.charAt(t+1)!=":" && newest.charAt(t+1)!=";" && newest.charAt(t+1)!="'")  { final+=". "; t++; }
+
+final+=newest.charAt(t);
+t++;
+}
+
+finish=final.length; finish--; if (final.charAt(finish)==" ") { final=final.substring(0,finish); }
+
+new_length=final.length; formatted=""; h=0;
+
+for (a=0; a<new_length; a++)  { 
+if (final.charAt(a)=='"') { h++; }
+}
+
+h=(h/2); n=Math.ceil (h);
+t=0; h=0;
+
+while (t<new_length)  { 
+if (h==0)  { 
+if (final.charAt(t)!='"') { formatted+=final.charAt(t);  } else { h=1; if (final.charAt(t-1)!=" " && final.charAt(t-1)!="(" && !(final.charAt(t-1)=="." && final.charAt(t-2)==".") && t!=0) { formatted+=" "; } formatted+=final.charAt(t); t++; if (final.charAt(t)==" ") { t++; } }
+}
+
+if (h==1)  { 
+if (final.charAt(t)!=" " && final.charAt(t)!='"') { formatted+=final.charAt(t);  } else { 
+if (final.charAt(t)==" " && final.charAt(t+1)=='"') { h=0; t++; }
+if (final.charAt(t)==" " && final.charAt(t+1)!='"') { formatted+=" "; }
+if (final.charAt(t)=='"' && final.charAt(t+1)!=" ") { h=0; formatted+=final.charAt(t); if (t!=(new_length-1) && final.charAt(t+1)!="." && final.charAt(t+1)!="!" && final.charAt(t+1)!="?" && final.charAt(t+1)!="," && final.charAt(t+1)!=";" && final.charAt(t+1)!=":" && final.charAt(t+1)!=")") { formatted+=" "; }  }
+if (final.charAt(t)=='"' && final.charAt(t+1)==" ") { h=0; formatted+=final.charAt(t); t++; formatted+=final.charAt(t); }
+}
+}
+t++;
+}
+return formatted;
+}
