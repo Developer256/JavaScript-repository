@@ -70,7 +70,7 @@ for (a=0; a<new_length; a++)  {
 if (final.charAt(a)=='"') { h++; }
 }
 
-h=(h/2); n=Math.ceil (h);
+h=(h/2); n=Math.ceil(h);
 t=0; h=0;
 
 while (t<new_length)  { 
